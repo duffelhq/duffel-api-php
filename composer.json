@@ -1,0 +1,17 @@
+{
+  "name": "duffel/api",
+  "type": "library",
+  "description": "Duffel API library for PHP",
+  "keywords": ["duffel", "flights", "flights-api", "travel"],
+  "homepage": "https://duffel.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Duffel Technology Limited",
+      "email": "help@duffel.com"
+    }
+  ],
+  "require": {
+    "php": ">= 7.4"
+  }
+}
