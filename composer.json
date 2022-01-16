@@ -8,7 +8,11 @@
   "authors": [
     {
       "name": "Duffel Technology Limited",
-      "email": "help@duffel.com"
+      "email": "client-libraries@duffel.com"
+    },
+    {
+      "name": "Sasha Gerrand",
+      "email": "duffel-api-php@sgerrand.com"
     }
   ],
   "require": {
