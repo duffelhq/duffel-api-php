@@ -36,9 +36,9 @@
     "phpunit/phpunit": "^8.5 || ^9.4"
   },
   "autoload": {
-    "psr-4": { "Duffel\\": "lib/Duffel/" }
+    "psr-4": { "Duffel\\": "src/Duffel/" }
   },
   "autoload-dev": {
-    "psr-4": { "Duffel\\Tests\\": "test/Duffel/Tests/"}
+    "psr-4": { "Duffel\\Tests\\": "tests/Duffel/Tests/"}
   }
 }

@@ -35,7 +35,7 @@ class Client {
   private $apiVersion;
   private $httpClientBuilder;
 
-  public function __construct(Builder $httpClientBuilder = null, string $accessToken = '', string $apiUrl = self::DEFAULT_API_URL, $apiVersion = self::DEFAULT_API_VERSION) {
+  public function __construct(string $accessToken = '', Builder $httpClientBuilder = null, string $apiUrl = self::DEFAULT_API_URL, $apiVersion = self::DEFAULT_API_VERSION) {
     $this->httpClientBuilder = $builder = $httpClientBuilder ?? new Builder();
     $this->setAccessToken($accessToken);
     $this->apiUrl = $apiUrl;
@@ -94,22 +94,7 @@ class Client {
     return new SeatMaps($this);
   }
 
-  public function setUrl(string $url): void {
-    $uri = $this->getHttpClientBuilder()->getUriFactory()->createUri($url);
-
-    $this->getHttpClientBuilder()->removePlugin(AddHostPlugin::class);
-    $this->getHttpClientBuilder()->addPlugin(new AddHostPlugin($uri));
-  }
-
-  public function getHttpClient(): HttpMethodsClientInterface {
-    return $this->getHttpClientBuilder()->getHttpClient();
-  }
-
-  protected function getHttpClientBuilder(): Builder {
-    return $this->httpClientBuilder;
-  }
-
-  private function getAccessToken() {
+  public function getAccessToken() {
     return $this->accessToken;
   }
 
@@ -123,6 +108,21 @@ class Client {
     }
 
     $authentication = new Bearer('token');
+  }
+
+  public function setUrl(string $url): void {
+    $uri = $this->getHttpClientBuilder()->getUriFactory()->createUri($url);
+
+    $this->getHttpClientBuilder()->removePlugin(AddHostPlugin::class);
+    $this->getHttpClientBuilder()->addPlugin(new AddHostPlugin($uri));
+  }
+
+  public function getHttpClient(): HttpMethodsClientInterface {
+    return $this->getHttpClientBuilder()->getHttpClient();
+  }
+
+  protected function getHttpClientBuilder(): Builder {
+    return $this->httpClientBuilder;
   }
 
   /**
