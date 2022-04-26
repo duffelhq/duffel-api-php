@@ -42,9 +42,6 @@ final class Builder {
   public function getHttpClient(): HttpMethodsClientInterface {
     if (null === $this->pluginClient) {
       $plugins = $this->plugins;
-      if (null !== $this->cachePlugin) {
-        $plugins[] = $this->cachePlugin;
-      }
 
       $this->pluginClient = new HttpMethodsClient(
         (new PluginClientFactory())->createClient($this->httpClient, $plugins),

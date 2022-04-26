@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\UriFactoryInterface;
 
 class BuilderTest extends TestCase {
   private $subject;
@@ -19,7 +20,8 @@ class BuilderTest extends TestCase {
     $this->subject = new Builder(
       $this->createMock(ClientInterface::class),
       $this->createMock(RequestFactoryInterface::class),
-      $this->createMock(StreamFactoryInterface::class)
+      $this->createMock(StreamFactoryInterface::class),
+      $this->createMock(UriFactoryInterface::class)
     );
   }
 
@@ -51,5 +53,9 @@ class BuilderTest extends TestCase {
 
   public function testStreamFactoryShouldBeStreamFactory(): void {
     $this->assertInstanceOf(StreamFactoryInterface::class, $this->subject->getStreamFactory());
+  }
+
+  public function testUriFactoryShouldBeUriFactory(): void {
+    $this->assertInstanceOf(UriFactoryInterface::class, $this->subject->getUriFactory());
   }
 }
