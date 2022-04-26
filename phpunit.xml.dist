@@ -9,7 +9,11 @@
                                                                processIsolation="false"
                                                                stopOnFailure="false"
   bootstrap="vendor/autoload.php">
-  <coverage processUncoveredFiles="true">
+  <coverage includeUncoveredFiles="true" processUncoveredFiles="true">
+    <report>
+      <html outputDirectory="html-coverage" lowUpperBound="50" highLowerBound="90"/>
+      <text outputFile="coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
+    </report>
     <include>
       <directory suffix=".php">./src/Duffel/</directory>
     </include>
