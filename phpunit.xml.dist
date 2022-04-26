@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+                                                               backupGlobals="false"
+                                                               backupStaticAttributes="false"
+                                                               colors="true"
+                                                               convertErrorsToExceptions="true"
+                                                               convertNoticesToExceptions="true"
+                                                               convertWarningsToExceptions="true"
+                                                               processIsolation="false"
+                                                               stopOnFailure="false"
+  bootstrap="vendor/autoload.php">
+  <coverage includeUncoveredFiles="true" processUncoveredFiles="true">
+    <report>
+      <html outputDirectory="html-coverage" lowUpperBound="50" highLowerBound="90"/>
+      <text outputFile="coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
+    </report>
+    <include>
+      <directory suffix=".php">./src/Duffel/</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="duffel-api-php Test Suite">
+      <directory>./tests/Duffel/</directory>
+    </testsuite>
+  </testsuites>
+  <groups>
+    <exclude>
+      <group>integration</group>
+    </exclude>
+  </groups>
+</phpunit>
