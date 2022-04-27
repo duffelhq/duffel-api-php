@@ -8,6 +8,7 @@
                                                                convertWarningsToExceptions="true"
                                                                processIsolation="false"
                                                                stopOnFailure="false"
+                                                               testdox="true"
   bootstrap="vendor/autoload.php">
   <coverage includeUncoveredFiles="true" processUncoveredFiles="true">
     <report>
