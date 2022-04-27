@@ -9,7 +9,7 @@ require("./vendor/autoload.php");
 use Duffel\Client;
 
 $client = new Client();
-$client->setAccessToken($_ENV['DUFFEL_ACCESS_TOKEN']);
+$client->setAccessToken(getenv('DUFFEL_ACCESS_TOKEN'));
 
 echo "Duffel Flights API - book and change example\n";
 $start = time();
