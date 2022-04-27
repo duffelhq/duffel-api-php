@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Duffel\HttpClient\Util;
+namespace Duffel\HttpClient;
 
 use Duffel\Exception\RuntimeException;
 
