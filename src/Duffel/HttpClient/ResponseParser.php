@@ -72,10 +72,6 @@ final class ResponseParser {
         foreach ($messages as $error_key => $error_value) {
           $errors[] = \sprintf('%s: %s', $error_key, $error_value);
         }
-      } elseif (\is_int($field)) {
-        $errors[] = $messages;
-      } else {
-        $errors[] = \sprintf($format, $field, $messages);
       }
     }
 
