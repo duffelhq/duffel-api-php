@@ -8,6 +8,10 @@ use Duffel\HttpClient\JsonArray;
 use PHPUnit\Framework\TestCase;
 
 class JsonArrayTest extends TestCase {
+  public function testDecodeWithJsonEmptyList(): void {
+    $this->assertSame([0 => ''], JsonArray::decode('[""]'));
+  }
+
   public function testDecodeWithInvalidJson(): void {
     $this->expectException(\RuntimeException::class);
 
@@ -26,8 +30,12 @@ class JsonArrayTest extends TestCase {
     JsonArray::decode('"some string"');
   }
 
-  public function testDecodeWithJsonEmptyList(): void {
-    $this->assertSame(JsonArray::decode('[""]'), [0 => '']);
+  public function testEncodeWithArray(): void {
+    $this->assertSame('["some","valid","data"]', JsonArray::encode(['some', 'valid', 'data']));
+  }
+
+  public function testEncodeWithArrayOfArrays(): void {
+    $this->assertSame('{"some":["valid","data"]}', JsonArray::encode(['some' => ['valid', 'data']]));
   }
 
   public function testEncodeWithString(): void {
