@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Duffel;
 
+use Duffel\Api\Aircraft;
 use Duffel\Exception\InvalidAccessTokenException;
 use Duffel\HttpClient\Builder;
 use Http\Client\Common\HttpMethodsClientInterface;
@@ -36,6 +37,10 @@ class Client {
     $builder->addPlugin(new HeaderDefaultsPlugin($this->getDefaultHeaders()));
 
     $this->setUrl($this->apiUrl);
+  }
+
+  public function aircraft(): Aircraft {
+    return new Aircraft($this);
   }
 
   public function getAccessToken() {
