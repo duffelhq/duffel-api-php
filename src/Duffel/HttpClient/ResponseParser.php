@@ -25,10 +25,6 @@ final class ResponseParser {
       return $decoded;
     }
 
-    if (array_key_exists('data', $body)) {
-      return $body['data'];
-    }
-
     return $body;
   }
 
@@ -49,31 +45,11 @@ final class ResponseParser {
       return null;
     }
 
-    if (isset($content['message'])) {
-      $message = $content['message'];
+    if (isset($content['errors'])) {
+      $errors = $content['errors'];
 
-      if (\is_string($message)) {
-        return self::wrapWithRequestId($message, self::getHeader($response, 'x-request-id'));
-      }
-
-      if (\is_array($message)) {
-        return self::wrapWithRequestId(self::getMessageAsString($content['message']), self::getHeader($response, 'x-request-id'));
-      }
-    }
-
-    if (isset($content['error_description'])) {
-      $error = $content['error_description'];
-
-      if (\is_string($error)) {
-        return self::wrapWithRequestId($error, self::getHeader($response, 'x-request-id'));
-      }
-    }
-
-    if (isset($content['error'])) {
-      $error = $content['error'];
-
-      if (\is_string($error)) {
-        return self::wrapWithRequestId($error, self::getHeader($response, 'x-request-id'));
+      if (\is_array($errors)) {
+        return self::wrapWithRequestId(self::getMessageAsString($errors), self::getHeader($response, 'x-request-id'));
       }
     }
 
@@ -93,8 +69,8 @@ final class ResponseParser {
     foreach ($message as $field => $messages) {
       if (\is_array($messages)) {
         $messages = \array_unique($messages);
-        foreach ($messages as $error) {
-          $errors[] = \sprintf($format, $field, $error);
+        foreach ($messages as $error_key => $error_value) {
+          $errors[] = \sprintf('%s: %s', $error_key, $error_value);
         }
       } elseif (\is_int($field)) {
         $errors[] = $messages;

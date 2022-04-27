@@ -43,9 +43,63 @@ class ResponseParserTest extends TestCase {
     $this->assertSame(["some" => ["keys" => ["with", "values"]]], ResponseParser::getContent($this->stub));
   }
 
-  public function testGetErrorMessage(): void {
+  public function testGetContentWithNilBodyAndContentTypeAsJson(): void {
     $this->stub->method('getBody')
-               ->willReturn('{"message": "some error message"}');
+               ->willReturn('');
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('application/json');
+
+    $this->assertSame('', ResponseParser::getContent($this->stub));
+  }
+
+  public function testGetContentWithNullBodyAndContentTypeAsJson(): void {
+    $this->stub->method('getBody')
+               ->willReturn('null');
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('application/json');
+
+    $this->assertSame('null', ResponseParser::getContent($this->stub));
+  }
+
+  public function testGetContentWithTrueBodyAndContentTypeAsJson(): void {
+    $this->stub->method('getBody')
+               ->willReturn('true');
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('application/json');
+
+    $this->assertSame('true', ResponseParser::getContent($this->stub));
+  }
+
+  public function testGetContentWithFalseBodyAndContentTypeAsJson(): void {
+    $this->stub->method('getBody')
+               ->willReturn('false');
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('application/json');
+
+    $this->assertSame('false', ResponseParser::getContent($this->stub));
+  }
+
+  public function testGetErrorMessageTransformsList(): void {
+    $this->stub->method('getBody')
+               ->willReturn('{
+  "errors": [
+    {
+      "code": "missing_authorization_header",
+      "documentation_url": "https://duffel.com/docs/api/overview/errors",
+      "message": "The \'Authorization\' header needs to be set and contain a valid API token.",
+      "title": "Missing authorization header",
+      "type": "authentication_error"
+    }
+  ],
+  "meta": {
+     "request_id": "FZW0H3HdJwKk5HMAAKxB",
+     "status": 401
+  }
+}');
     $this->stub->method('getHeaderLine')
                ->with('Content-Type')
                ->willReturn('application/json');
@@ -53,6 +107,8 @@ class ResponseParserTest extends TestCase {
                ->with('x-request-id')
                ->willReturn(['some-request-id']);
 
-    $this->assertSame('[some-request-id]: some error message', ResponseParser::getErrorMessage($this->stub));
+  $this->assertSame(
+    '[some-request-id]: code: missing_authorization_header, documentation_url: https://duffel.com/docs/api/overview/errors, message: The \'Authorization\' header needs to be set and contain a valid API token., title: Missing authorization header, type: authentication_error',
+    ResponseParser::getErrorMessage($this->stub));
   }
 }
