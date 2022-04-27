@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Duffel\HttpClient;
 
+use Duffel\Exception\RuntimeException;
 use Duffel\HttpClient\ResponseParser;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -86,20 +87,20 @@ class ResponseParserTest extends TestCase {
   public function testGetErrorMessageTransformsList(): void {
     $this->stub->method('getBody')
                ->willReturn('{
-  "errors": [
-    {
-      "code": "missing_authorization_header",
+               "errors": [
+  {
+    "code": "missing_authorization_header",
       "documentation_url": "https://duffel.com/docs/api/overview/errors",
       "message": "The \'Authorization\' header needs to be set and contain a valid API token.",
       "title": "Missing authorization header",
       "type": "authentication_error"
-    }
-  ],
-  "meta": {
-     "request_id": "FZW0H3HdJwKk5HMAAKxB",
-     "status": 401
   }
-}');
+  ],
+    "meta": {
+    "request_id": "FZW0H3HdJwKk5HMAAKxB",
+      "status": 401
+  }
+  }');
     $this->stub->method('getHeaderLine')
                ->with('Content-Type')
                ->willReturn('application/json');
@@ -107,8 +108,49 @@ class ResponseParserTest extends TestCase {
                ->with('x-request-id')
                ->willReturn(['some-request-id']);
 
-  $this->assertSame(
-    '[some-request-id]: code: missing_authorization_header, documentation_url: https://duffel.com/docs/api/overview/errors, message: The \'Authorization\' header needs to be set and contain a valid API token., title: Missing authorization header, type: authentication_error',
-    ResponseParser::getErrorMessage($this->stub));
+    $this->assertSame(
+      '[some-request-id]: code: missing_authorization_header, documentation_url: https://duffel.com/docs/api/overview/errors, message: The \'Authorization\' header needs to be set and contain a valid API token., title: Missing authorization header, type: authentication_error',
+      ResponseParser::getErrorMessage($this->stub)
+    );
+  }
+
+  public function testGetErrorMessageWhenJsonDecodeFailsReturnsNull(): void {
+    $this->stub->method('getBody')
+               ->willThrowException(new RuntimeException());
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('application/json');
+
+    $this->assertSame(null, ResponseParser::getErrorMessage($this->stub));
+  }
+
+  public function testGetErrorMessageWhenJsonIsStringReturnsNull(): void {
+    $this->stub->method('getBody')
+               ->willReturn('"some error string in JSON format"');
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('application/json');
+
+    $this->assertSame(null, ResponseParser::getErrorMessage($this->stub));
+  }
+
+  public function testGetErrorMessageWhenTextIsStringReturnsNull(): void {
+    $this->stub->method('getBody')
+               ->willReturn('some error string in text format');
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('text/plain');
+
+    $this->assertSame(null, ResponseParser::getErrorMessage($this->stub));
+  }
+
+  public function testGetErrorMessageWhenJsonIsObjectWithoutErrorsKeyReturnsNull(): void {
+    $this->stub->method('getBody')
+               ->willReturn('{"some": ["error", "string in JSON", "format"]}');
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('application/json');
+
+    $this->assertSame(null, ResponseParser::getErrorMessage($this->stub));
   }
 }
