@@ -15,15 +15,15 @@ class ResponseParserTest extends TestCase {
     $this->stub = $this->createStub(ResponseInterface::class);
   }
 
-  public function testConstantContentTypeHeader(): void {
+  public function testConstantContainsExpectedContentTypeHeader(): void {
     $this->assertSame('Content-Type', ResponseParser::CONTENT_TYPE_HEADER);
   }
 
-  public function testConstantJsonContentType(): void {
+  public function testConstantContainsExpectedJsonContentType(): void {
     $this->assertSame('application/json', ResponseParser::JSON_CONTENT_TYPE);
   }
 
-  public function testGetContentWithoutDataKey(): void {
+  public function testGetContentAsJsonWithoutDataKey(): void {
     $this->stub->method('getBody')
                ->willReturn('{"some": {"keys": ["with", "values"]} }');
     $this->stub->method('getHeaderLine')
@@ -33,7 +33,7 @@ class ResponseParserTest extends TestCase {
     $this->assertSame(["some" => ["keys" => ["with", "values"]]], ResponseParser::getContent($this->stub));
   }
 
-  public function testGetContentWithDataKey(): void {
+  public function testGetContentAsJsonWithDataKey(): void {
     $this->stub->method('getBody')
                ->willReturn('{"data": {"some": {"keys": ["with", "values"]} } }');
     $this->stub->method('getHeaderLine')
