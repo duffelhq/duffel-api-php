@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Duffel\Examples;
 
-require("./vendor/autoload.php");
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use Duffel\Client;
 
