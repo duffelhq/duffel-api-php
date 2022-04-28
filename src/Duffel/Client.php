@@ -8,6 +8,7 @@ use Duffel\Api\Aircraft;
 use Duffel\Api\Airlines;
 use Duffel\Api\Airports;
 use Duffel\Api\OfferRequests;
+use Duffel\Api\Offers;
 use Duffel\Exception\InvalidAccessTokenException;
 use Duffel\HttpClient\Builder;
 use Http\Client\Common\HttpMethodsClientInterface;
@@ -56,6 +57,10 @@ class Client {
 
   public function offer_requests(): OfferRequests {
     return new OfferRequests($this);
+  }
+
+  public function offers(): Offers {
+    return new Offers($this);
   }
 
   public function getAccessToken() {
