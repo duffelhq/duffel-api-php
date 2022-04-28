@@ -8,6 +8,7 @@ use Duffel\Api\Aircraft;
 use Duffel\Api\Airlines;
 use Duffel\Api\Airports;
 use Duffel\Api\OfferRequests;
+use Duffel\Api\Offers;
 use Duffel\Client;
 use Duffel\Exception\InvalidAccessTokenException;
 use Duffel\HttpClient\Builder;
@@ -50,6 +51,10 @@ class ClientTest extends TestCase {
 
   public function testOfferRequestsUsesApiClass(): void {
     $this->assertInstanceOf(OfferRequests::class, $this->subject->offer_requests());
+  }
+
+  public function testOffersUsesApiClass(): void {
+    $this->assertInstanceOf(Offers::class, $this->subject->offers());
   }
 
   public function testSetAccessTokenChangesValue(): void {
