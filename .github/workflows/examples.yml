@@ -41,3 +41,9 @@ jobs:
 
       - name: Run exploring data example
         run: php ./examples/exploring-data.php
+
+      - name: Run search and book example
+        run: php ./examples/search-and-book.php
+
+      - name: Run book with extra baggage example
+        run: php ./examples/book-with-extra-baggage.php
