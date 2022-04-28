@@ -1,2 +1,8 @@
+# PHPUnit
+.phpunit.result.cache
+coverage.txt
+html-coverage/
+
+# Composer
 composer.lock
 vendor/
