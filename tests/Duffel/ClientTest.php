@@ -51,7 +51,7 @@ class ClientTest extends TestCase {
   }
 
   public function testOfferRequestsUsesApiClass(): void {
-    $this->assertInstanceOf(OfferRequests::class, $this->subject->offer_requests());
+    $this->assertInstanceOf(OfferRequests::class, $this->subject->offerRequests());
   }
 
   public function testOffersUsesApiClass(): void {
