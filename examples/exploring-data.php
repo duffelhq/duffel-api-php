@@ -11,7 +11,7 @@ use Duffel\Client;
 $client = new Client();
 $client->setAccessToken(getenv('DUFFEL_ACCESS_TOKEN'));
 
-echo "Duffel Flights API - book and change example\n";
+echo "Duffel Flights API - exploring data example\n";
 $start = time();
 
 echo "Loading aircraft...\n";
