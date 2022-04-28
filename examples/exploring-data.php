@@ -26,5 +26,17 @@ $singleAircraft = $client->aircraft()->show($allAircraft[0]['id']);
 
 echo sprintf("Aircraft's IATA code is %s\n", $singleAircraft['iata_code']);
 
+echo "Loading airlines...\n";
+
+$airlines = $client->airlines()->all();
+
+echo sprintf("Got %d airlines\n", count($airlines));
+
+echo sprintf("Found airline %s\n", $airlines[0]['name']);
+
+$airline = $client->airlines()->show($airlines[0]['id']);
+
+echo sprintf("Airline's IATA code is %s\n", $airline['iata_code']);
+
 $finish = time();
 echo sprintf("Finished in %d seconds.\n", ($finish - $start));
