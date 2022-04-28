@@ -56,7 +56,7 @@ class Client {
     return new Airports($this);
   }
 
-  public function offer_requests(): OfferRequests {
+  public function offerRequests(): OfferRequests {
     return new OfferRequests($this);
   }
 
