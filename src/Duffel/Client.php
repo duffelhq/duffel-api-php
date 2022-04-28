@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Duffel;
 
+use Duffel\Api\Aircraft;
 use Duffel\Exception\InvalidAccessTokenException;
 use Duffel\HttpClient\Builder;
 use Http\Client\Common\HttpMethodsClientInterface;
@@ -33,28 +34,27 @@ class Client {
     $this->apiUrl = self::DEFAULT_API_URL;
     $this->apiVersion = self::DEFAULT_API_VERSION;
 
-    $builder->addPlugin(new AuthenticationPlugin(new Bearer($this->getAccessToken())));
     $builder->addPlugin(new HeaderDefaultsPlugin($this->getDefaultHeaders()));
 
     $this->setUrl($this->apiUrl);
   }
 
+  public function aircraft(): Aircraft {
+    return new Aircraft($this);
+  }
+
   public function getAccessToken() {
-    if (is_null($this->accessToken)) {
-      return $this->accessToken;
-    } else {
-      return str_replace('input! ', '', $this->accessToken);
-    }
+    return $this->accessToken;
   }
 
   public function setAccessToken(string $token) {
     if ('' !== trim($token) && strlen(trim($token)) > 0) {
-      $this->accessToken = 'input! ' . $token;
+      $this->accessToken = $token;
     } else {
       throw new InvalidAccessTokenException("You need to set a token");
     }
 
-    $authentication = new Bearer('token');
+    $this->httpClientBuilder->addPlugin(new AuthenticationPlugin(new Bearer($this->getAccessToken())));
   }
 
   public function getApiVersion(): string {

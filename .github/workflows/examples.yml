@@ -1,4 +1,4 @@
-name: CI
+name: Examples
 
 on:
   push:
@@ -7,21 +7,13 @@ on:
     branches: [ main ]
 
 jobs:
-  tests:
-    name: Tests
+  code_examples:
+    name: Code Examples
 
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        env:
-          - AUTOLOAD=0
-          - AUTOLOAD=1
-        php-version:
-          - "7.4"
-          - "8.0"
-          - "8.1"
+    env:
+      DUFFEL_ACCESS_TOKEN: ${{ secrets.DUFFEL_ACCESS_TOKEN }}
 
     steps:
       - uses: actions/checkout@master
@@ -29,7 +21,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@master
         with:
-          php-version: ${{ matrix.php-version }}
+          php-version: 8.1
           coverage: xdebug
 
       - name: Get Composer Cache Directory
@@ -47,5 +39,5 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Run tests
-        run: ./vendor/bin/phpunit
+      - name: Run exploring data example
+        run: php ./examples/exploring-data.php
