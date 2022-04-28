@@ -11,6 +11,7 @@ use Duffel\Api\OfferRequests;
 use Duffel\Api\Offers;
 use Duffel\Api\OrderCancellations;
 use Duffel\Api\Orders;
+use Duffel\Api\SeatMaps;
 use Duffel\Client;
 use Duffel\Exception\InvalidAccessTokenException;
 use Duffel\HttpClient\Builder;
@@ -65,6 +66,10 @@ class ClientTest extends TestCase {
 
   public function testOrdersUsesApiClass(): void {
     $this->assertInstanceOf(Orders::class, $this->subject->orders());
+  }
+
+  public function testSeatMapsUsesApiClass(): void {
+    $this->assertInstanceOf(SeatMaps::class, $this->subject->seatMaps());
   }
 
   public function testSetAccessTokenChangesValue(): void {
