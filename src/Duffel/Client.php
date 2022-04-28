@@ -6,6 +6,7 @@ namespace Duffel;
 
 use Duffel\Api\Aircraft;
 use Duffel\Api\Airlines;
+use Duffel\Api\Airports;
 use Duffel\Exception\InvalidAccessTokenException;
 use Duffel\HttpClient\Builder;
 use Http\Client\Common\HttpMethodsClientInterface;
@@ -46,6 +47,10 @@ class Client {
 
   public function airlines(): Airlines {
     return new Airlines($this);
+  }
+
+  public function airports(): Airports {
+    return new Airports($this);
   }
 
   public function getAccessToken() {
