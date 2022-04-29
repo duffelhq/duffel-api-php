@@ -14,6 +14,7 @@ use Duffel\Api\OrderChangeOffers;
 use Duffel\Api\OrderChangeRequests;
 use Duffel\Api\OrderChanges;
 use Duffel\Api\Orders;
+use Duffel\Api\Payments;
 use Duffel\Api\SeatMaps;
 use Duffel\Exception\InvalidAccessTokenException;
 use Duffel\HttpClient\Builder;
@@ -87,6 +88,10 @@ class Client {
 
   public function orders(): Orders {
     return new Orders($this);
+  }
+
+  public function Payments(): Payments {
+    return new Payments($this);
   }
 
   public function seatMaps(): SeatMaps {
