@@ -48,6 +48,9 @@ jobs:
       - name: Run book and change example
         run: php ./examples/book-and-change.php
 
+      - name: Run book hold order example
+        run: php ./examples/book-hold-order.php
+
       - name: Run book with extra baggage example
         run: php ./examples/book-with-extra-baggage.php
 
