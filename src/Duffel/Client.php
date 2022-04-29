@@ -11,6 +11,7 @@ use Duffel\Api\OfferRequests;
 use Duffel\Api\Offers;
 use Duffel\Api\OrderCancellations;
 use Duffel\Api\Orders;
+use Duffel\Api\SeatMaps;
 use Duffel\Exception\InvalidAccessTokenException;
 use Duffel\HttpClient\Builder;
 use Http\Client\Common\HttpMethodsClientInterface;
@@ -71,6 +72,10 @@ class Client {
 
   public function orders(): Orders {
     return new Orders($this);
+  }
+
+  public function seatMaps(): SeatMaps {
+    return new SeatMaps($this);
   }
 
   public function getAccessToken() {

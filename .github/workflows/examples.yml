@@ -47,3 +47,6 @@ jobs:
 
       - name: Run book with extra baggage example
         run: php ./examples/book-with-extra-baggage.php
+
+      - name: Run book with seat example
+        run: php ./examples/book-with-seat.php
