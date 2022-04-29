@@ -10,6 +10,7 @@ use Duffel\Api\Airports;
 use Duffel\Api\OfferRequests;
 use Duffel\Api\Offers;
 use Duffel\Api\OrderCancellations;
+use Duffel\Api\OrderChangeOffers;
 use Duffel\Api\OrderChangeRequests;
 use Duffel\Api\Orders;
 use Duffel\Api\SeatMaps;
@@ -63,6 +64,10 @@ class ClientTest extends TestCase {
 
   public function testOrderCancellationsUsesApiClass(): void {
     $this->assertInstanceOf(OrderCancellations::class, $this->subject->orderCancellations());
+  }
+
+  public function testOrderChangeOffersUsesApiClass(): void {
+    $this->assertInstanceOf(OrderChangeOffers::class, $this->subject->orderChangeOffers());
   }
 
   public function testOrderChangeRequestsUsesApiClass(): void {

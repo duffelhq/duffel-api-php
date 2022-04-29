@@ -10,6 +10,7 @@ use Duffel\Api\Airports;
 use Duffel\Api\OfferRequests;
 use Duffel\Api\Offers;
 use Duffel\Api\OrderCancellations;
+use Duffel\Api\OrderChangeOffers;
 use Duffel\Api\OrderChangeRequests;
 use Duffel\Api\Orders;
 use Duffel\Api\SeatMaps;
@@ -69,6 +70,10 @@ class Client {
 
   public function orderCancellations(): OrderCancellations {
     return new OrderCancellations($this);
+  }
+
+  public function orderChangeOffers(): OrderChangeOffers {
+    return new OrderChangeOffers($this);
   }
 
   public function orderChangeRequests(): OrderChangeRequests {
