@@ -14,6 +14,7 @@ use Duffel\Api\OrderChangeOffers;
 use Duffel\Api\OrderChangeRequests;
 use Duffel\Api\OrderChanges;
 use Duffel\Api\Orders;
+use Duffel\Api\PaymentIntents;
 use Duffel\Api\Payments;
 use Duffel\Api\SeatMaps;
 use Duffel\Exception\InvalidAccessTokenException;
@@ -90,7 +91,11 @@ class Client {
     return new Orders($this);
   }
 
-  public function Payments(): Payments {
+  public function paymentIntents(): PaymentIntents {
+    return new PaymentIntents($this);
+  }
+
+  public function payments(): Payments {
     return new Payments($this);
   }
 

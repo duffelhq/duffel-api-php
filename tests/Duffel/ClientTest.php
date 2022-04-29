@@ -14,6 +14,7 @@ use Duffel\Api\OrderChangeOffers;
 use Duffel\Api\OrderChangeRequests;
 use Duffel\Api\OrderChanges;
 use Duffel\Api\Orders;
+use Duffel\Api\PaymentIntents;
 use Duffel\Api\Payments;
 use Duffel\Api\SeatMaps;
 use Duffel\Client;
@@ -82,6 +83,10 @@ class ClientTest extends TestCase {
 
   public function testOrdersUsesApiClass(): void {
     $this->assertInstanceOf(Orders::class, $this->subject->orders());
+  }
+
+  public function testPaymentIntentsUsesApiClass(): void {
+    $this->assertInstanceOf(PaymentIntents::class, $this->subject->paymentIntents());
   }
 
   public function testPaymentsUsesApiClass(): void {
