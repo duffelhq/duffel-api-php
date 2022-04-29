@@ -10,6 +10,7 @@ use Duffel\Api\Airports;
 use Duffel\Api\OfferRequests;
 use Duffel\Api\Offers;
 use Duffel\Api\OrderCancellations;
+use Duffel\Api\OrderChangeRequests;
 use Duffel\Api\Orders;
 use Duffel\Api\SeatMaps;
 use Duffel\Exception\InvalidAccessTokenException;
@@ -68,6 +69,10 @@ class Client {
 
   public function orderCancellations(): OrderCancellations {
     return new OrderCancellations($this);
+  }
+
+  public function orderChangeRequests(): OrderChangeRequests {
+    return new OrderChangeRequests($this);
   }
 
   public function orders(): Orders {
