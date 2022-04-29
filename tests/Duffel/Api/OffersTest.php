@@ -9,7 +9,7 @@ use Duffel\Client;
 use Http\Client\Common\HttpMethodsClientInterface;
 use PHPUnit\Framework\TestCase;
 
-class TestOffers extends TestCase {
+class OffersTest extends TestCase {
   private $mock;
   private $stub;
 
