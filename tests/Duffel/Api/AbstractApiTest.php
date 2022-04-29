@@ -10,7 +10,7 @@ use Duffel\HttpClient\Builder;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\TestCase;
 
-class TestAbstractApi extends TestCase {
+class AbstractApiTest extends TestCase {
   private $builder;
   private $client;
   private $mock;
