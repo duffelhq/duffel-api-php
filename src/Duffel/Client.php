@@ -90,7 +90,7 @@ class Client {
     return new Orders($this);
   }
 
-  public function Payments(): Payments {
+  public function payments(): Payments {
     return new Payments($this);
   }
 
