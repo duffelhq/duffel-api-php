@@ -28,6 +28,7 @@
     "http-interop/http-factory-guzzle": "^1.0",
     "guzzlehttp/guzzle": "^7.2",
     "php-http/mock-client": "^1.4.1",
+    "phpstan/phpstan": "^1.6",
     "phpunit/phpunit": "^8.5 || ^9.4"
   },
   "autoload": {
