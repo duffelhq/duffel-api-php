@@ -32,9 +32,7 @@ class OrderCancellations extends AbstractApi {
       "order_id" => $orderId
     );
 
-    return $this->post('/air/order_cancellations', \array_filter($params, function ($value) {
-      return null !== $value && (!\is_string($value) || '' !== $value);
-    }));
+    return $this->post('/air/order_cancellations', $params);
   }
 
 
