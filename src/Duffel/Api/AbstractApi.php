@@ -8,6 +8,7 @@ use Duffel\Client;
 use Duffel\HttpClient\ResponseParser;
 use Duffel\HttpClient\JsonArray;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractApi {
   /**
@@ -24,6 +25,15 @@ abstract class AbstractApi {
    */
   public function __construct(Client $client) {
     $this->client = $client;
+  }
+
+  /**
+   * @return OptionsResolver
+   */
+  protected function createOptionsResolver(): OptionsResolver {
+    $resolver = new OptionsResolver();
+
+    return $resolver;
   }
 
   /**

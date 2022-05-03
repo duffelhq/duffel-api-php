@@ -12,17 +12,16 @@ class Payments extends AbstractApi {
    * @return mixed
    */
   public function create(string $orderId, array $payment) {
+    $resolver = $this->createOptionsResolver();
+    $resolver->setRequired(['amount', 'currency', 'type']);
+
+    $payment = $resolver->resolve($payment);
+
     $params = [
       'order_id' => $orderId,
-      'payment' => [
-        'amount' => $payment['amount'],
-        'currency' => $payment['currency'],
-        'type' => $payment['type'],
-      ],
+      'payment' => $payment,
     ];
 
-    return $this->post('/air/payments', \array_filter($params, function ($value) {
-      return null !== $value && (!\is_string($value) || '' !== $value);
-    }));
+    return $this->post('/air/payments', $params);
   }
 }
