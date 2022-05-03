@@ -7,8 +7,6 @@ namespace Duffel\HttpClient;
 use Http\Client\Common\HttpMethodsClient;
 use Http\Client\Common\HttpMethodsClientInterface;
 use Http\Client\Common\Plugin;
-use Http\Client\Common\Plugin\Cache\Generator\HeaderCacheKeyGenerator;
-use Http\Client\Common\Plugin\CachePlugin;
 use Http\Client\Common\PluginClientFactory;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -19,12 +17,34 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 
 final class Builder {
+  /**
+   * @var ClientInterface
+   */
   private $httpClient;
+
+  /**
+   * @var RequestFactoryInterface
+   */
   private $requestFactory;
+
+  /**
+   * @var StreamFactoryInterface
+   */
   private $streamFactory;
+
+  /**
+   * @var UriFactoryInterface
+   */
   private $uriFactory;
-  private $cachePlugin;
+
+  /**
+   * @var Plugin[]
+   */
   private $plugins = [];
+
+  /**
+   * @var HttpMethodsClientInterface|null
+   */
   private $pluginClient;
 
   public function __construct(

@@ -8,24 +8,69 @@ use Duffel\Client;
 use Duffel\HttpClient\ResponseParser;
 use Duffel\HttpClient\JsonArray;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractApi {
+  /**
+   *
+   * @var Client
+   */
   private $client;
 
+  /**
+   *
+   * @param Client $client
+   *
+   * @return void
+   */
   public function __construct(Client $client) {
     $this->client = $client;
   }
 
+  /**
+   * @return OptionsResolver
+   */
+  protected function createOptionsResolver(): OptionsResolver {
+    $resolver = new OptionsResolver();
+
+    return $resolver;
+  }
+
+  /**
+   *
+   * @param string               $uri
+   * @param array                $params
+   * @param array<string,string> $headers
+   *
+   * @throws \Http\Client\Exception
+   *
+   * @return \Psr\Http\Message\ResponseInterface
+   */
   protected function getAsResponse(string $uri, array $params = [], array $headers = []): ResponseInterface {
     return $this->client->getHttpClient()->get(self::prepareUri($uri, $params), $headers);
   }
 
+  /**
+   * @param string               $uri
+   * @param array<string,mixed>  $params
+   * @param array<string,string> $headers
+   *
+   * @return mixed
+   **/
   protected function get(string $uri, array $params = [], array $headers = []) {
     $response = $this->getAsResponse($uri, $params, $headers);
 
     return ResponseParser::getContent($response);
   }
 
+
+  /**
+   * @param string               $uri
+   * @param array<string,mixed>  $params
+   * @param array<string,string> $headers
+   *
+   * @return mixed
+   **/
   protected function post(string $uri, array $params = [], array $headers = []) {
     $body = self::prepareJsonBody($params);
 
@@ -38,6 +83,14 @@ abstract class AbstractApi {
     return ResponseParser::getContent($response);
   }
 
+
+  /**
+   * @param string               $uri
+   * @param array<string,mixed>  $params
+   * @param array<string,string> $headers
+   *
+   * @return mixed
+   **/
   protected function put(string $uri, array $params = [], array $headers = []) {
     $body = self::prepareJsonBody($params);
 
@@ -50,6 +103,14 @@ abstract class AbstractApi {
     return ResponseParser::getContent($response);
   }
 
+
+  /**
+   * @param string               $uri
+   * @param array<string,mixed>  $params
+   * @param array<string,string> $headers
+   *
+   * @return mixed
+   **/
   protected function delete(string $uri, array $params = [], array $headers = []) {
     $body = self::prepareJsonBody($params);
 
@@ -62,11 +123,23 @@ abstract class AbstractApi {
     return ResponseParser::getContent($response);
   }
 
+
+  /**
+   * @param string $uri
+   *
+   * @return string
+   **/
   protected static function encodePath(string $uri): string
   {
-    return \rawurlencode((string) $uri);
+    return \rawurlencode($uri);
   }
 
+  /**
+   * @param string $uri
+   * @param array  $query
+   *
+   * @return string
+   **/
   private static function prepareUri(string $uri, array $query = []): string {
     $query = \array_filter($query, function ($value): bool {
       return null !== $value;
@@ -75,6 +148,11 @@ abstract class AbstractApi {
     return $uri;
   }
 
+  /**
+   * @param array<string,mixed> $params
+   *
+   * @return string|null
+   **/
   private static function prepareJsonBody(array $params): ?string {
     $params = \array_filter($params, function ($value): bool {
       return null !== $value;
@@ -92,6 +170,11 @@ abstract class AbstractApi {
   }
 
 
+  /**
+   * @param array<string,string> $headers
+   *
+   * @return array<string,string>
+   **/
   private static function addJsonContentType(array $headers): array {
     return \array_merge([ResponseParser::CONTENT_TYPE_HEADER => ResponseParser::JSON_CONTENT_TYPE], $headers);
   }

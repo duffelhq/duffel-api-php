@@ -12,6 +12,11 @@ final class ResponseParser {
   public const CONTENT_TYPE_HEADER = 'Content-Type';
   public const JSON_CONTENT_TYPE = 'application/json';
 
+  /**
+   * @param ResponseInterface $response
+   *
+   * @return mixed|string
+   */
   public static function getContent(ResponseInterface $response) {
     $body = (string) $response->getBody();
 
@@ -49,7 +54,13 @@ final class ResponseParser {
       $errors = $content['errors'];
 
       if (\is_array($errors)) {
-        return self::wrapWithRequestId(self::getMessageAsString($errors), self::getHeader($response, 'x-request-id'));
+        $requestId = self::getHeader($response, 'x-request-id');
+
+        if (\is_null($requestId)) {
+          return self::getMessageAsString($errors);
+        }
+
+        return self::wrapWithRequestId(self::getMessageAsString($errors), $requestId);
       }
     }
 

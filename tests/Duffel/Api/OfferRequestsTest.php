@@ -6,6 +6,7 @@ namespace Duffel\Tests\Api;
 
 use Duffel\Api\OfferRequests;
 use Duffel\Client;
+use Duffel\Exception\RuntimeException;
 use Http\Client\Common\HttpMethodsClientInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -29,66 +30,22 @@ class OfferRequestsTest extends TestCase {
     $actual->all();
   }
 
-  public function testCreateWithDefaultsCallsPostWithExpectedUriAndBody(): void {
-    $this->mock->expects($this->once())
-               ->method('post')
-               ->with(
-                 $this->equalTo('/air/offer_requests'),
-                 ['Content-Type' => 'application/json'],
-                 $this->equalTo('{"data":{"cabin_class":"economy","passengers":[],"slices":[]}}')
-               );
+  public function testCreateWithoutParametersRaisesException(): void {
+    $this->expectException(RuntimeException::class);
 
     $actual = new OfferRequests($this->stub);
     $actual->create();
   }
 
-  public function testCreateWithCabinClassBusinessCallsPostWithExpectedUriAndBody(): void {
-    $this->mock->expects($this->once())
-               ->method('post')
-               ->with(
-                 $this->equalTo('/air/offer_requests'),
-                 ['Content-Type' => 'application/json'],
-                 $this->equalTo('{"data":{"cabin_class":"business","passengers":[],"slices":[]}}')
-               );
+  public function testCreateWithCabinClassParameterRaisesException(): void {
+    $this->expectException(RuntimeException::class);
 
     $actual = new OfferRequests($this->stub);
     $actual->create('business');
   }
 
-  public function testCreateWithCabinClassPremiumEconomyCallsPostWithExpectedUriAndBody(): void {
-    $this->mock->expects($this->once())
-               ->method('post')
-               ->with(
-                 $this->equalTo('/air/offer_requests'),
-                 ['Content-Type' => 'application/json'],
-                 $this->equalTo('{"data":{"cabin_class":"premium_economy","passengers":[],"slices":[]}}')
-               );
-
-    $actual = new OfferRequests($this->stub);
-    $actual->create('premium_economy');
-  }
-
-  public function testCreateWithCabinClassFirstCallsPostWithExpectedUriAndBody(): void {
-    $this->mock->expects($this->once())
-               ->method('post')
-               ->with(
-                 $this->equalTo('/air/offer_requests'),
-                 ['Content-Type' => 'application/json'],
-                 $this->equalTo('{"data":{"cabin_class":"first","passengers":[],"slices":[]}}')
-               );
-
-    $actual = new OfferRequests($this->stub);
-    $actual->create('first');
-  }
-
-  public function testCreateWithEconomyCabinClassAndPassengersCallsPostWithExpectedUriAndBody(): void {
-    $this->mock->expects($this->once())
-               ->method('post')
-               ->with(
-                 $this->equalTo('/air/offer_requests'),
-                 ['Content-Type' => 'application/json'],
-                 $this->equalTo('{"data":{"cabin_class":"economy","passengers":[{"given_name":"Amelia","family_name":"Earhart","age":30}],"slices":[]}}')
-               );
+  public function testCreateWithEconomyCabinClassAndPassengersRaisesException(): void {
+    $this->expectException(RuntimeException::class);
 
     $actual = new OfferRequests($this->stub);
     $actual->create('economy', [['given_name' => 'Amelia', 'family_name' => 'Earhart', 'age' => 30]]);

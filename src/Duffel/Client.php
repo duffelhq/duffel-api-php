@@ -37,9 +37,24 @@ class Client {
   private const DEFAULT_API_VERSION = 'beta';
   private const VERSION = '0.0.0-alpha';
 
+  /**
+   * @var string
+   */
   private $accessToken;
+
+  /**
+   * @var string
+   */
   private $apiUrl;
+
+  /**
+   * @var string
+   */
   private $apiVersion;
+
+  /**
+   * @var Builder
+   */
   private $httpClientBuilder;
 
   public function __construct(Builder $httpClientBuilder = null) {
@@ -108,18 +123,17 @@ class Client {
     return new SeatMaps($this);
   }
 
-  public function getAccessToken() {
+  public function getAccessToken(): ?string {
     return $this->accessToken;
   }
 
-  public function setAccessToken(string $token) {
-    if ('' !== trim($token) && strlen(trim($token)) > 0) {
-      $this->accessToken = $token;
-    } else {
+  public function setAccessToken(string $token): void {
+    if ('' === trim($token)) {
       throw new InvalidAccessTokenException("You need to set a token");
     }
 
-    $this->httpClientBuilder->addPlugin(new AuthenticationPlugin(new Bearer($this->getAccessToken())));
+    $this->accessToken = trim($token);
+    $this->httpClientBuilder->addPlugin(new AuthenticationPlugin(new Bearer($this->accessToken)));
   }
 
   public function getApiVersion(): string {
@@ -144,6 +158,7 @@ class Client {
   protected function getHttpClientBuilder(): Builder {
     return $this->httpClientBuilder;
   }
+
   private function getDefaultHeaders(): array {
     return array(
       "Duffel-Version" => $this->apiVersion,
