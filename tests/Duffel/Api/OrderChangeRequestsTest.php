@@ -20,30 +20,28 @@ class OrderChangeRequestsTest extends TestCase {
                ->willReturn($this->mock);
   }
 
-  public function testCreateWithOfferAndPassengersAndPaymentsCallsGetWithExpectedUri(): void {
+  public function testCreateWithIdAndSlicesCallsGetWithExpectedUri(): void {
     $this->mock->expects($this->once())
                ->method('post')
                ->with(
                  $this->equalTo('/air/order_change_requests'),
                  $this->equalTo(['Content-Type' => 'application/json']),
-                 $this->equalTo('{"data":{"slices":{"slices":{"remove":[{"slice_id":"sli_00009htYpSCXrwaB9Dn123"}],"add":[{"origin":"LHR","destination":"JFK","departure_date":"2022-05-20","cabin_class":"economy"}]}},"order_id":"ord_0000A3bQ8FJIQoEfuC07n6"}}')
+                 $this->equalTo('{"data":{"slices":{"remove":[{"slice_id":"sli_00009htYpSCXrwaB9Dn123"}],"add":[{"origin":"LHR","destination":"JFK","departure_date":"2022-05-20","cabin_class":"economy"}]},"order_id":"ord_0000A3bQ8FJIQoEfuC07n6"}}')
                );
 
     $actual = new OrderChangeRequests($this->stub);
     $actual->create('ord_0000A3bQ8FJIQoEfuC07n6', [
-      'slices' => [
-        'remove' => [
-          [
-            'slice_id' => 'sli_00009htYpSCXrwaB9Dn123',
-          ],
+      'remove' => [
+        [
+          'slice_id' => 'sli_00009htYpSCXrwaB9Dn123',
         ],
-        'add' => [
-          [
-            'origin' => 'LHR',
-            'destination' => 'JFK',
-            'departure_date' => '2022-05-20',
-            'cabin_class' => 'economy',
-          ],
+      ],
+      'add' => [
+        [
+          'origin' => 'LHR',
+          'destination' => 'JFK',
+          'departure_date' => '2022-05-20',
+          'cabin_class' => 'economy',
         ],
       ],
     ]);
