@@ -16,6 +16,3 @@ parameters:
   checkMissingIterableValueType: false
   paths:
     - src
-  ignoreErrors:
-    - '#Only booleans are allowed in an if condition#'
-    - '#PHPDoc tag \@var above a method has no effect.#'
