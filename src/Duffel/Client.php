@@ -123,18 +123,17 @@ class Client {
     return new SeatMaps($this);
   }
 
-  public function getAccessToken(): string {
+  public function getAccessToken(): ?string {
     return $this->accessToken;
   }
 
   public function setAccessToken(string $token): void {
-    if ('' !== trim($token)) {
-      $this->accessToken = $token;
-    } else {
+    if ('' === trim($token)) {
       throw new InvalidAccessTokenException("You need to set a token");
     }
 
-    $this->httpClientBuilder->addPlugin(new AuthenticationPlugin(new Bearer($this->getAccessToken())));
+    $this->accessToken = trim($token);
+    $this->httpClientBuilder->addPlugin(new AuthenticationPlugin(new Bearer($this->accessToken)));
   }
 
   public function getApiVersion(): string {
