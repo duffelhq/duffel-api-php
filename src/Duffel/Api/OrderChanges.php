@@ -15,9 +15,7 @@ class OrderChanges extends AbstractApi {
       "selected_order_change_offer" => $orderChangeOfferId,
     );
 
-    return $this->post('/air/order_changes', \array_filter($params, function ($value) {
-      return null !== $value && (!\is_string($value) || '' !== $value);
-    }));
+    return $this->post('/air/order_changes', $params);
   }
 
   /**
@@ -27,13 +25,16 @@ class OrderChanges extends AbstractApi {
    * @return mixed
    */
   public function confirm(string $id, array $payment) {
+    $resolver = $this->createOptionsResolver();
+    $resolver->setRequired(['amount', 'currency', 'type']);
+
+    $payment = $resolver->resolve($payment);
+
     $params = array(
       "payment" => $payment,
     );
 
-    return $this->post('/air/order_changes/'.self::encodePath($id).'/actions/confirm', \array_filter($params, function ($value) {
-      return null !== $value && (!\is_string($value) || '' !== $value);
-    }));
+    return $this->post('/air/order_changes/'.self::encodePath($id).'/actions/confirm', $params);
   }
 
   /**
