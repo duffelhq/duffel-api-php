@@ -12,14 +12,17 @@ class OrderChangeRequests extends AbstractApi {
    * @return mixed
    */
   public function create(string $orderId, array $slices) {
+    $resolver = $this->createOptionsResolver();
+    $resolver->setRequired(['add', 'remove']);
+
+    $slices = $resolver->resolve($slices);
+
     $params = array(
       "slices" => $slices,
       "order_id" => $orderId,
     );
 
-    return $this->post('/air/order_change_requests', \array_filter($params, function ($value) {
-      return null !== $value && (!\is_string($value) || '' !== $value);
-    }));
+    return $this->post('/air/order_change_requests', $params);
   }
 
   /**
