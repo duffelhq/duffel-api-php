@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace Duffel\Api;
 
 class Refunds extends AbstractApi {
+  /**
+   * @param array $refund
+   *
+   * @return mixed
+   */
   public function create(array $refund) {
     $params = [
       'amount' => $refund['amount'],
@@ -17,6 +22,11 @@ class Refunds extends AbstractApi {
     }));
   }
 
+  /**
+   * @param string $id
+   *
+   * @return mixed
+   */
   public function show(string $id) {
     return $this->get('/payments/refunds/'.self::encodePath($id));
   }
