@@ -114,6 +114,36 @@ class ResponseParserTest extends TestCase {
     );
   }
 
+  public function testGetErrorMessageWhenRequestIdIsMissingReturnsUnwrappedMessage(): void {
+    $this->stub->method('getBody')
+               ->willReturn('{
+               "errors": [
+  {
+    "code": "missing_authorization_header",
+      "documentation_url": "https://duffel.com/docs/api/overview/errors",
+      "message": "The \'Authorization\' header needs to be set and contain a valid API token.",
+      "title": "Missing authorization header",
+      "type": "authentication_error"
+  }
+  ],
+    "meta": {
+    "request_id": "FZW0H3HdJwKk5HMAAKxB",
+      "status": 401
+  }
+  }');
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('application/json');
+    $this->stub->method('getHeader')
+               ->with('x-request-id')
+               ->willReturn([]);
+
+    $this->assertSame(
+      'code: missing_authorization_header, documentation_url: https://duffel.com/docs/api/overview/errors, message: The \'Authorization\' header needs to be set and contain a valid API token., title: Missing authorization header, type: authentication_error',
+      ResponseParser::getErrorMessage($this->stub)
+    );
+  }
+
   public function testGetErrorMessageWhenJsonDecodeFailsReturnsNull(): void {
     $this->stub->method('getBody')
                ->willThrowException(new RuntimeException());
