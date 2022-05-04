@@ -38,10 +38,18 @@ class JsonArrayTest extends TestCase {
     $this->assertSame('{"some":["valid","data"]}', JsonArray::encode(['some' => ['valid', 'data']]));
   }
 
+  public function testEncodeWithObjectOfArrayOfUrls(): void {
+    $this->assertSame('{"urls":["https://valid.dom","http://another-valid.tld/path"]}', JsonArray::encode(['urls' => ['https://valid.dom', 'http://another-valid.tld/path']]));
+  }
+
   public function testEncodeWithString(): void {
     $this->expectException(\TypeError::class);
 
     JsonArray::encode("some invalid data");
+  }
+
+  public function testEncodeWithObjectAndUrl(): void {
+    $this->assertSame('{"url":"https://some-valid-url.dom/path"}', JsonArray::encode(['url' => 'https://some-valid-url.dom/path']));
   }
 
   public function testEncodeWithInvalidJson(): void {
