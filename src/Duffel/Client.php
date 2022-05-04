@@ -60,6 +60,7 @@ class Client {
 
   public function __construct(Builder $httpClientBuilder = null) {
     $this->httpClientBuilder = $builder = $httpClientBuilder ?? new Builder();
+    $this->accessToken = '';
     $this->apiUrl = self::DEFAULT_API_URL;
     $this->apiVersion = self::DEFAULT_API_VERSION;
 

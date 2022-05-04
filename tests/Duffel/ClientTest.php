@@ -44,7 +44,7 @@ class ClientTest extends TestCase {
   }
 
   public function testNewSetsDefaultAccessToken(): void {
-    $this->assertSame(null, $this->subject->getAccessToken());
+    $this->assertSame('', $this->subject->getAccessToken());
   }
 
   public function testAircraftUsesApiClass(): void {
