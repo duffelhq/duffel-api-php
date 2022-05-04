@@ -23,7 +23,7 @@ final class JsonArray {
   }
 
   public static function encode(array $value): string {
-    $json = \json_encode($value);
+    $json = \json_encode($value, JSON_UNESCAPED_SLASHES);
 
     if (false === $json || \JSON_ERROR_NONE !== \json_last_error()) {
       throw new RuntimeException(\sprintf('json_encode error: %s', \json_last_error_msg()));

@@ -18,6 +18,7 @@ use Duffel\Api\PaymentIntents;
 use Duffel\Api\Payments;
 use Duffel\Api\Refunds;
 use Duffel\Api\SeatMaps;
+use Duffel\Api\Webhooks;
 use Duffel\Client;
 use Duffel\Exception\InvalidAccessTokenException;
 use Duffel\HttpClient\Builder;
@@ -94,12 +95,16 @@ class ClientTest extends TestCase {
     $this->assertInstanceOf(Payments::class, $this->subject->payments());
   }
 
+  public function testRefundsUsesApiClass(): void {
+    $this->assertInstanceOf(Refunds::class, $this->subject->refunds());
+  }
+
   public function testSeatMapsUsesApiClass(): void {
     $this->assertInstanceOf(SeatMaps::class, $this->subject->seatMaps());
   }
 
-  public function testRefundsUsesApiClass(): void {
-    $this->assertInstanceOf(Refunds::class, $this->subject->refunds());
+  public function testWebhooksUsesApiClass(): void {
+    $this->assertInstanceOf(Webhooks::class, $this->subject->webhooks());
   }
 
   public function testSetAccessTokenChangesValue(): void {

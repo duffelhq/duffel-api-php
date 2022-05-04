@@ -18,6 +18,7 @@ use Duffel\Api\PaymentIntents;
 use Duffel\Api\Payments;
 use Duffel\Api\Refunds;
 use Duffel\Api\SeatMaps;
+use Duffel\Api\Webhooks;
 use Duffel\Exception\InvalidAccessTokenException;
 use Duffel\HttpClient\Builder;
 use Http\Client\Common\HttpMethodsClientInterface;
@@ -121,6 +122,10 @@ class Client {
 
   public function seatMaps(): SeatMaps {
     return new SeatMaps($this);
+  }
+
+  public function webhooks(): Webhooks {
+    return new Webhooks($this);
   }
 
   public function getAccessToken(): ?string {
