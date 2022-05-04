@@ -34,7 +34,8 @@
     "thecodingmachine/phpstan-strict-rules": "^1.0",
     "phpstan/phpstan-deprecation-rules": "^1.0",
     "phpstan/phpstan-strict-rules": "^1.2",
-    "ergebnis/phpstan-rules": "^1.0"
+    "ergebnis/phpstan-rules": "^1.0",
+    "vimeo/psalm": "^4.23"
   },
   "autoload": {
     "psr-4": { "Duffel\\": "src/Duffel/" }
