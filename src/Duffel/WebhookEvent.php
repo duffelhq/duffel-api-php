@@ -59,14 +59,16 @@ final class WebhookEvent {
    * @raise InvalidRequestSignatureError
    */
   private static function parseSignature(string $signature): array {
-    if (false !== preg_match(self::SIGNATURE_REGEXP, $signature, $matches)) {
+    $matches = [];
+
+    if (preg_match(self::SIGNATURE_REGEXP, $signature, $matches)) {
       return [
         'v1' => $matches[2],
         'timestamp' => $matches[1],
       ];
-    } else {
-      throw new InvalidRequestSignatureException();
     }
+
+    throw new InvalidRequestSignatureException();
   }
 
   /**
@@ -88,9 +90,7 @@ final class WebhookEvent {
     foreach(str_split($b) as $v) {
       $o = mb_ord($v);
 
-      if (\is_int($o)) {
-        $r |= $o ^ $l[$i += 1];
-      }
+      $r |= $o ^ $l[$i += 1];
     }
 
     return 0 === $r;
