@@ -31,11 +31,15 @@ $ composer require "duffel/api:dev-main" "guzzlehttp/guzzle:^7.4" "http-interop/
 
 ## Usage
 
-A simple example is as follows.
+A simple example of using this library (after successfully installing it) follows.
 
 ```php
-$client = new Duffel/Client();
+use Duffel\Client;
+
+$client = new Duffel\Client();
 $client->setAccessToken(getenv('DUFFEL_ACCESS_TOKEN'));
+
+$client->airports->list();
 ```
 
 See the [`examples/`](./examples) directory for additional working examples.
