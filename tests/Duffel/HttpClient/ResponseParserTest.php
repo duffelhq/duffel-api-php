@@ -183,4 +183,44 @@ class ResponseParserTest extends TestCase {
 
     $this->assertSame(null, ResponseParser::getErrorMessage($this->stub));
   }
+
+  public function testGetPaginationAsJsonWithMetaKey(): void {
+    $this->stub->method('getBody')
+               ->willReturn('{"data": {"some": {"keys": ["with", "values"]} }, "meta": {"after": "some-after-key", "before": "some-before-key", "limit": 50} }');
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('application/json');
+
+    $this->assertSame(["after" => "some-after-key", "before" => "some-before-key", "limit" => 50], ResponseParser::getPagination($this->stub));
+  }
+
+  public function testGetPaginationAsJsonWithMetaKeyAndNullAfter(): void {
+    $this->stub->method('getBody')
+               ->willReturn('{"data": {"some": {"keys": ["with", "values"]} }, "meta": {"after": null, "before": "some-before-key", "limit": 50} }');
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('application/json');
+
+    $this->assertSame(["after" => null, "before" => "some-before-key", "limit" => 50], ResponseParser::getPagination($this->stub));
+  }
+
+  public function testGetPaginationAsJsonWithMetaKeyAndNullBefore(): void {
+    $this->stub->method('getBody')
+               ->willReturn('{"data": {"some": {"keys": ["with", "values"]} }, "meta": {"after": "some-after-key", "before": null, "limit": 50} }');
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('application/json');
+
+    $this->assertSame(["after" => "some-after-key", "before" => null, "limit" => 50], ResponseParser::getPagination($this->stub));
+  }
+
+  public function testGetPaginationAsJsonWithoutMetaKey(): void {
+    $this->stub->method('getBody')
+               ->willReturn('{"data": {"some": {"keys": ["with", "values"]} } }');
+    $this->stub->method('getHeaderLine')
+               ->with('Content-Type')
+               ->willReturn('application/json');
+
+    $this->assertSame([], ResponseParser::getPagination($this->stub));
+  }
 }
