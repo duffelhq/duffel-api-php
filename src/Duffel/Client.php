@@ -35,7 +35,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 
 class Client {
   private const DEFAULT_API_URL = 'https://api.duffel.com/';
-  private const DEFAULT_API_VERSION = 'beta';
+  private const DEFAULT_API_VERSION = 'v1';
   private const VERSION = '0.0.0-alpha';
 
   /**
