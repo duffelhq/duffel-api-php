@@ -40,7 +40,7 @@ class ClientTest extends TestCase {
   }
 
   public function testNewSetsDefaultApiVersion(): void {
-    $this->assertSame('beta', $this->subject->getApiVersion());
+    $this->assertSame('v1', $this->subject->getApiVersion());
   }
 
   public function testNewSetsDefaultAccessToken(): void {
@@ -115,13 +115,13 @@ class ClientTest extends TestCase {
 
   public function testSetAccessTokenWithEmptyStringThrowsException(): void {
     $this->expectException(InvalidAccessTokenException::class);
-      
+
     $this->subject->setAccessToken('   ');
   }
 
   public function testSetAccessTokenWithNullThrowsTypeError(): void {
     $this->expectException(\TypeError::class);
-      
+
     $this->subject->setAccessToken(null);
   }
 
