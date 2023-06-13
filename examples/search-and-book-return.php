@@ -6,24 +6,30 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Duffel\Client;
 
-echo "Duffel Flights API - search and book example\n";
+echo "Duffel Flights API - search and book (return) example\n";
 $start = time();
 
 $client = new Client();
 $client->setAccessToken(getenv('DUFFEL_ACCESS_TOKEN'));
 
-$departureDate = (new DateTime)->add(new DateInterval("P10D"))->format('Y-m-d');
+$departureDate_1 = (new DateTime)->add(new DateInterval("P10D"))->format('Y-m-d');
+$departureDate_2 = (new DateTime)->add(new DateInterval("P14D"))->format('Y-m-d');
 
 $offerRequest = $client->offerRequests()->create(
-  "economy", 
+  "economy",
   array(
     array("type" => "adult")
   ),
   array(
     array(
       "origin" => "LHR",
-      "destination" => "STN", 
-      "departure_date" => $departureDate
+      "destination" => "STN",
+      "departure_date" => $departureDate_1
+    ),
+    array(
+      "origin" => "STN",
+      "destination" => "LHR",
+      "departure_date" => $departureDate_2
     )
   )
 );
