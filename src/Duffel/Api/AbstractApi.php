@@ -18,6 +18,11 @@ abstract class AbstractApi {
   private $client;
 
   /**
+   * @var int|null
+   */
+  private $limit;
+
+  /**
    *
    * @param Client $client
    *
@@ -122,7 +127,6 @@ abstract class AbstractApi {
 
     return ResponseParser::getContent($response);
   }
-
 
   /**
    * @param string $uri

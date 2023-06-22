@@ -33,6 +33,25 @@ final class ResponseParser {
     return $body;
   }
 
+  /**
+   * @param ResponseInterface $response
+   *
+   * @return array<string,string>
+   */
+  public static function getPagination(ResponseInterface $response): array {
+    $body = (string) $response->getBody();
+
+    if (!\in_array($body, ['', 'null', 'true', 'false'], true) && 0 === \strpos($response->getHeaderLine(self::CONTENT_TYPE_HEADER), self::JSON_CONTENT_TYPE)) {
+      $decoded = JsonArray::decode($body);
+
+      if (array_key_exists('meta', $decoded)) {
+        return $decoded['meta'];
+      }
+    }
+
+    return [];
+  }
+
   private static function getHeader(ResponseInterface $response, string $name): ?string {
     $headers = $response->getHeader($name);
 
