@@ -42,8 +42,11 @@ jobs:
       - name: Run exploring data example
         run: php ./examples/exploring-data.php
 
-      - name: Run search and book example
-        run: php ./examples/search-and-book.php
+      - name: Run search and book example (one way)
+        run: php ./examples/search-and-book-one-way.php
+
+      - name: Run search and book example (return)
+        run: php ./examples/search-and-book-return.php
 
       - name: Run book and change example
         run: php ./examples/book-and-change.php
