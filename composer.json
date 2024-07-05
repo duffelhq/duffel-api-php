@@ -3,7 +3,7 @@
   "type": "library",
   "description": "Duffel API library for PHP",
   "keywords": ["duffel", "flights", "flights-api", "travel"],
-  "homepage": "https://duffel.com",
+  "homepage": "https://github.com/duffel/duffel-api-php",
   "license": "MIT",
   "authors": [
     {
