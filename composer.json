@@ -37,6 +37,9 @@
     "ergebnis/phpstan-rules": "^1.0",
     "vimeo/psalm": "^4.23"
   },
+  "support": {
+    "source": "https://github.com/sgerrand/duffel-api-php.git"
+  },
   "autoload": {
     "psr-4": { "Duffel\\": "src/Duffel/" }
   },
