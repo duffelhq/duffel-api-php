@@ -38,6 +38,7 @@
     "vimeo/psalm": "^4.23"
   },
   "support": {
+    "email": "help@duffel.com",
     "source": "https://github.com/duffelhq/duffel-api-php.git"
   },
   "autoload": {
