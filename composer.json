@@ -3,7 +3,7 @@
   "type": "library",
   "description": "Duffel API library for PHP",
   "keywords": ["duffel", "flights", "flights-api", "travel"],
-  "homepage": "https://duffel.com",
+  "homepage": "https://github.com/duffelhq/duffel-api-php",
   "license": "MIT",
   "authors": [
     {
@@ -37,10 +37,19 @@
     "ergebnis/phpstan-rules": "^1.0",
     "vimeo/psalm": "^4.23"
   },
+  "support": {
+    "email": "help@duffel.com",
+    "source": "https://github.com/duffelhq/duffel-api-php.git"
+  },
   "autoload": {
     "psr-4": { "Duffel\\": "src/Duffel/" }
   },
   "autoload-dev": {
     "psr-4": { "Duffel\\Tests\\": "tests/Duffel/Tests/"}
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
   }
 }
