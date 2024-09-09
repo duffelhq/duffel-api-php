@@ -1,3 +1,12 @@
+> [!WARNING] 
+> This client library is not currently being supported by Duffel due to a lack of adoption.
+> 
+> You're welcome to fork the repositories and continue maintaining them for your own use.
+>
+> If, in the future, there's sufficient demand for a particular client library, we'll reconsider our decision to officially support it.
+
+---
+
 # duffel/api
 
 A PHP library for the [Duffel API](https://duffel.com/docs/api).
